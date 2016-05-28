@@ -42,7 +42,8 @@ class AuthController extends Controller {
 		$confirm->save();
 
 		Mail::send('email.confirm', ['first_name' => $user->first_name,
-																	'key' => $confirm->key],
+																	'key' => $confirm->key,
+																	'email' => $user->email],
 										function($message) use ($user){
 											$message->to($user->email, $user->first_name . 
 																										' ' .

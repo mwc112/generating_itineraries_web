@@ -19,9 +19,7 @@ Route::get('/', function () {
 Route::get('/register', 'AuthController@showRegistrationForm');
 Route::post('/register', 'AuthController@register');
 
-Route::get('/confirm_email', function() {
-		return view('confirm_email');
-	});
+Route::get('/confirm_email', 'ConfirmEmailController@confirmEmail');
 
 Route::get('/login', function() {
 		return view('login');
