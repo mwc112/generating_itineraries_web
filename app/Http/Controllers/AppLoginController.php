@@ -19,6 +19,9 @@ class AppLoginController extends Controller {
 			if(strcmp($request->req_type, 'Validate') == 0) {
 				return $this->validateToken($request);
 			}
+			if(strcmp($request->req_type, 'Logout') == 0) {
+				return $this->logout($request);
+			}
 		}
 
 		return 'Bad Request';
@@ -69,7 +72,18 @@ class AppLoginController extends Controller {
 		}
 	}
 
-
+	public function logout(Request $request) {
+		if($request->has('key') and $request->has('app_id')) {
+			$login = DB::table('app_logins')->where('key', $request->key)
+					->where('app_id', $request->app_id)->first();
+			if($login != null) {
+				DB::table('app_logins')->where('key', $request->key)
+						->where('app_id', $request->app_id)
+						->update(['valid_until' => time()]);
+			}
+		}
+		return "Bad Request";
+	}
 
 
 }
