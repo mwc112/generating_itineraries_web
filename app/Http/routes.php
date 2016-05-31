@@ -33,5 +33,5 @@ Route::get('/confirm_email', 'ConfirmEmailController@confirmEmail');
 
 //Route::post('/user', 'ShowUserController@updateUser');
 
-Route::get('/app_login', 'AppLoginController@getToken');
+Route::get('/app_login', 'AppLoginController@login');
 ?>

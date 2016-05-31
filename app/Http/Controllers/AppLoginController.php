@@ -10,8 +10,21 @@ use DB;
 
 class AppLoginController extends Controller {
 
-	public function getToken(Request $request) {
+	public function login(Request $request) {
+		if($request->has('req_type')) {
+			if(strcmp($request->req_type, 'token') == 0) {
+				return $this->getToken($request);
+		
+			}
+			if(strcmp($request->req_type, 'Validate') == 0) {
+				return $this->validateToken($request);
+			}
+		}
 
+		return 'Bad Request';
+	}
+
+	public function getToken(Request $request) {
 		if($request->has('email') and $request->has('password') and
 				$request->has('app_id')) {
 			$user = DB::table('users')->where('email', $request->email)->first();
@@ -37,11 +50,27 @@ class AppLoginController extends Controller {
 				}
 			}
 		}
-
 		return "Bad Request";
-
 	}
 
-}
+	public function validateToken(Request $request) {
+		if($request->has('key') and $request->has('app_id')) {
+			$login = DB::table('app_logins')->where('key', $request->key)
+					->where('app_id', $request->app_id)->first();
+			if($login != null and $login->valid_until < time()) {
+				return 'Valid';
+			}
+			else {
+				return 'Invalid';
+			}
+		}
+		else {
+			return 'Bad Request';
+		}
+	}
 
+
+
+
+}
 ?>
