@@ -12,7 +12,7 @@
 |
 */
 
-Route::get('/', function () {
+/*Route::get('/', function () {
     return view('home');
 });
 
@@ -33,5 +33,7 @@ Route::get('/confirm_email', 'ConfirmEmailController@confirmEmail');
 
 //Route::post('/user', 'ShowUserController@updateUser');
 
-Route::get('/app_login', 'AppLoginController@login');
+Route::get('/app_login', 'AppLoginController@login');*/
+
+Route::get('/disruption', 'TravelDisruptionController@getDisruption');
 ?>
