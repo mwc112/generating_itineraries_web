@@ -21,6 +21,12 @@ use App\Http\Controllers\Controller;
 		public $fromDate;
 	}
 
+	class TflDate {
+		public $year;
+		public $month;
+		public $day;
+	}
+
 class TravelDisruptionController extends Controller {
 
 	public function getDisruption(Request $request) {
@@ -61,11 +67,33 @@ class TravelDisruptionController extends Controller {
 						$result_ret[$i]->statuses[$j]->validityPeriods = array();
 						for($k = 0; $k < count($line_stat->validityPeriods); $k++) {
 							$result_ret[$i]->statuses[$j]->validityPeriods[$k] = new Period;
-							$result_ret[$i]->statuses[$j]->validityPeriods[$k]->fromDate =
-									$line_stat->validityPeriods[$k]->fromDate;
 
-							$result_ret[$i]->statuses[$j]->validityPeriods[$k]->toDate =
-									$line_stat->validityPeriods[$k]->toDate;
+							$old_from_date = $line_stat->validityPeriods[$k]->fromDate;
+							$old_to_date = $line_stat->validityPeriods[$k]->toDate;
+							$from_date = new TflDate;
+							$to_date = new TflDate;
+							$from_date->year = intval(substr($old_from_date, 0, 4));
+							$from_date->month = intval(substr($old_from_date, 5, 2));
+							$from_date->day = intval(substr($old_from_date, 8, 2));
+							$to_date->year = intval(substr($old_to_date, 0, 4));
+							$to_date->month = intval(substr($old_to_date, 5, 2));
+							$to_date->day = intval(substr($old_to_date, 8, 2));
+
+							if($from_date->year == $to_date->year
+										and $from_date->month == $to_date->month
+										and $from_date->day == $to_date->day
+										and intval(substr($old_to_date, 11, 2))
+										- intval(substr($old_from_date, 11, 2)) < 4) {
+								
+							}
+							else {
+							
+								$result_ret[$i]->statuses[$j]->validityPeriods[$k]->fromDate =
+										$from_date;
+
+								$result_ret[$i]->statuses[$j]->validityPeriods[$k]->toDate =
+										$to_date;
+							}
 						}
 
 					}
@@ -78,7 +106,22 @@ class TravelDisruptionController extends Controller {
 
 		}
 
+		return 'Bad Request';
 	}
+
+	/*private function increaseByDay(TflDate $date) {
+		if($date->day == intval(date('t', strtotime($date->month . $date->day)))) {
+			if($date->month == 12) {
+				$date->year = $date->year + 1;
+			}
+			else {
+				$date->month = $date->month + 1;
+			}
+		}
+		else {
+			$date->day = $date->day+1;
+		}
+	}*/
 
 }
 
