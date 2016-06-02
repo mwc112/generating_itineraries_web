@@ -66,8 +66,6 @@ class TravelDisruptionController extends Controller {
 					if($line_stat->statusSeverity != 10) {
 						$result_ret[$i]->statuses[$j]->validityPeriods = array();
 						for($k = 0; $k < count($line_stat->validityPeriods); $k++) {
-							$result_ret[$i]->statuses[$j]->validityPeriods[$k] = new Period;
-
 							$old_from_date = $line_stat->validityPeriods[$k]->fromDate;
 							$old_to_date = $line_stat->validityPeriods[$k]->toDate;
 							$from_date = new TflDate;
@@ -87,7 +85,7 @@ class TravelDisruptionController extends Controller {
 								
 							}
 							else {
-							
+								$result_ret[$i]->statuses[$j]->validityPeriods[$k] = new Period;
 								$result_ret[$i]->statuses[$j]->validityPeriods[$k]->fromDate =
 										$from_date;
 
