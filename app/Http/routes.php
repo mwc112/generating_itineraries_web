@@ -35,5 +35,7 @@ Route::get('/confirm_email', 'ConfirmEmailController@confirmEmail');
 
 Route::get('/app_login', 'AppLoginController@login');*/
 
-Route::get('/disruption', 'TravelDisruptionController@getDisruption');
+//Route::get('/disruption', 'TravelDisruptionController@getDisruption');
+
+Route::get('/save_trip', 'SaveTripController@saveTrip');
 ?>
