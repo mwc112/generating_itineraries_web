@@ -17,7 +17,7 @@ class SaveTripController extends Controller {
 				and $request->has('times_to_stay') and $request->has('waypoints')
 				and $request->has('transport_method') and $request->has('creator')
 				and $request->has('start_date_time') and $request->has('app_id')
-				and $request->has('key')) {
+				and $request->has('key') and $request->has('trip_id')) {
 
 			$login = DB::table('app_logins')->where('key', $request->key)
 					->where('app_id', $request->app_id)->first();
@@ -33,6 +33,8 @@ class SaveTripController extends Controller {
 				$trip->route = $request->route;
 				$trip->transport_method = $request->transport_method;
 				$trip->creator = $login->user_id;
+				$trip->app_trip_id = $request->trip_id;
+				$trip->app_id = $request->app_id;
 				$trip->save();
 				return "OK";
 			}
