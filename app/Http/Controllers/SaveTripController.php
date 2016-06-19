@@ -13,16 +13,16 @@ class SaveTripController extends Controller {
 
 	public function methodChoose(Request $request) {
 
-		if($request->has('method') {
+		if($request->has('method')) {
 
-			if(strcmp($request->method, "Save") {
+			if(strcmp($request->method, 'Save') == 0 ) {
 	
-				saveTrip($request);
+				return $this->saveTrip($request);
 
 			}
 			else {
 
-				loadTrips($request);
+				return $this->loadTrips($request);
 
 			}
 
@@ -76,18 +76,22 @@ class SaveTripController extends Controller {
 
 	public function loadTrips(Request $request) {
 
-		if($request->has('app_id') {
+		if($request->has('app_id')) {
 
-			$result = DB::table('trips')->where('app_id', $request->app_id);
+			$result = DB::table('trips')->where('app_id', $request->app_id)->get();
 			$result_ret = array();
 
-			for($i = 0; $i < count($result); $i++) {
+			if($result != null) {
+				for($i = 0; $i < count($result); $i++) {
 
-				$result_ret[$i] = $result[$i]->app_trip_id;
+					$result_ret[$i] = $result[$i]->app_trip_id;
 
+				}
 			}
-
+			
 			return json_encode($result_ret);
+			
+		
 
 		}
 		else {
