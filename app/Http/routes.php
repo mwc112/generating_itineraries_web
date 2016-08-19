@@ -12,7 +12,7 @@
 |
 */
 
-/*Route::get('/', function () {
+Route::get('/', function () {
     return view('home');
 });
 
@@ -21,21 +21,28 @@ Route::post('/register', 'AuthController@register');
 
 Route::get('/confirm_email', 'ConfirmEmailController@confirmEmail');
 
-//Route::get('/login', function() {
-//		return view('login');
-//	});
+Route::get('/login', function() {
+		return view('login');
+	});
 
-//Route::post('/login', 'AuthController@authenticateUser');
+Route::post('/login', 'AuthController@authenticateUser');
 
-//Route::get('/logout', 'AuthController@logout');
+Route::get('/logout', 'AuthController@logout');
 
-//Route::get('/user', 'ShowUserController@showUser');
+Route::get('/user', 'ShowUserController@showUser');
 
-//Route::post('/user', 'ShowUserController@updateUser');
+Route::post('/user', 'ShowUserController@updateUser');
 
-Route::get('/app_login', 'AppLoginController@login');*/
+Route::get('/app_login', 'AppLoginController@login');
 
-//Route::get('/disruption', 'TravelDisruptionController@getDisruption');
+Route::get('/disruption', 'TravelDisruptionController@getDisruption');
 
-Route::get('/save_trip', 'SaveTripController@saveTrip');
+Route::get('/save_trip', 'SaveTripController@methodChoose');
+
+Route::get('/trips', 'ShowTripsController@showTrips');
+Route::post('/trips', 'ShowTripsController@markTrips');
+
+Route::get('/map', function() {
+		return view('map');
+	});
 ?>
