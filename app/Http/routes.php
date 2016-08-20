@@ -45,4 +45,6 @@ Route::post('/trips', 'ShowTripsController@markTrips');
 Route::get('/map', function() {
 		return view('map');
 	});
+
+Route::get('/time', 'GetTimeAtLocationController@getTime');
 ?>
